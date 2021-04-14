@@ -1,0 +1,17 @@
+version: "3"
+
+services: 
+  valhalla_buildtiles:
+    image: takoyaki3/valhalla
+    volumes:
+      - ./valhalla_tiles:/valhalla_tiles
+    working_dir: /valhalla
+    command: valhalla_build_tiles -c /valhalla.json /valhalla_tiles/japan-latest.osm.pbf
+  valhalla_run:
+    image: takoyaki3/valhalla
+    ports:
+      - 8002:8002
+    volumes:
+      - ./valhalla_tiles:/valhalla_tiles
+    working_dir: /valhalla/build
+    command: valhalla_service /valhalla.json 1
